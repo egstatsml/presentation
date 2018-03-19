@@ -1,0 +1,529 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Beamer Presentation
+% LaTeX Template
+% Version 1.0 (10/11/12)
+%
+% This template has been downloaded from:
+% http://www.LaTeXTemplates.com
+%
+% License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND THEMES
+%----------------------------------------------------------------------------------------
+
+\documentclass{beamer}
+
+\mode<presentation> {
+
+% The Beamer class comes with a number of default slide themes
+% which change the colors and layouts of slides. Below this is a list
+% of all the themes, uncomment each in turn to see what they look like.
+
+%\usetheme{default}
+%\usetheme{AnnArbor}
+%\usetheme{Antibes}
+%\usetheme{Bergen}
+%\usetheme{Berkeley}
+%\usetheme{Berlin}
+%\usetheme{Boadilla}
+%\usetheme{CambridgeUS}
+%\usetheme{Copenhagen}
+%\usetheme{Darmstadt}
+%\usetheme{Dresden}
+%\usetheme{Frankfurt}
+%\usetheme{Goettingen}
+%\usetheme{Hannover}
+%\usetheme{Ilmenau}
+%\usetheme{JuanLesPins}
+%\usetheme{Luebeck}
+\usetheme{Madrid}
+%\usetheme{Malmoe}
+%\usetheme{Marburg}
+%\usetheme{Montpellier}
+%\usetheme{PaloAlto}
+%\usetheme{Pittsburgh}
+%\usetheme{Rochester}
+%\usetheme{Singapore}
+%\usetheme{Szeged}
+%\usetheme{Warsaw}
+
+% As well as themes, the Beamer class has a number of color themes
+% for any slide theme. Uncomment each of these in turn to see how it
+% changes the colors of your current slide theme.
+
+%\usecolortheme{albatross}
+%\usecolortheme{beaver}
+%\usecolortheme{beetle}
+%\usecolortheme{crane}
+%\usecolortheme{dolphin}
+%\usecolortheme{dove}
+%\usecolortheme{fly}
+%\usecolortheme{lily}
+%\usecolortheme{orchid}
+%\usecolortheme{rose}
+%\usecolortheme{seagull}
+%\usecolortheme{seahorse}
+%\usecolortheme{whale}
+%\usecolortheme{wolverine}
+
+%\setbeamertemplate{footline} % To remove the footer line in all slides uncomment this line
+%\setbeamertemplate{footline}[page number] % To replace the footer line in all slides with a simple slide count uncomment this line
+
+%\setbeamertemplate{navigation symbols}{} % To remove the navigation symbols from the bottom of all slides uncomment this line
+}
+
+\usepackage{url}
+\usepackage{array}
+\usepackage{amsmath}
+\usepackage{tikz}
+%\renewcommand{\familydefault}{\rmdefault}
+%\usepackage[scaled=1]{helvet}
+%\usepackage[helvet]{sfmath}
+%\everymath={\sf}
+\usepackage{lmodern}
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcommand{\mb}[1]{\mathbf{#1}}
+\rmfamily
+
+\usepackage{graphicx} % Allows including images
+\usepackage{booktabs} % Allows the use of \toprule, \midrule and \bottomrule in tables
+\usepackage{subcaption}
+\usepackage[style=bwl-FU,backend=bibtex]{biblatex}
+\addbibresource{ref.bib}
+% ----------------------------------------------------------------------------------------
+%	TITLE PAGE 
+%----------------------------------------------------------------------------------------
+
+\title[A Bayesian Perspective of Neural Networks]{A Bayesian Perspective of Neural Networks} % The short title appears at the bottom of every slide, the full title is only on the title page
+
+\author{Ethan Goan} % Your name
+\institute[QUT] % Your institution as it will appear on the bottom of every slide, may be shorthand to save space
+{
+  Supervised by\\
+  Prof. Clinton Fookes, Dr. Dimitri Perrin and Prof. Kerrie Mengersen\\
+  \vspace*{3cm}
+  \includegraphics[scale=0.3]{figs/qut.eps}\\
+  Queensland University of Technology \\ % Your institution for the title page
+  \medskip
+}
+\date{} % Date, can be changed to a custom date
+\begin{document}
+
+\begin{frame}
+  \titlepage % Print the title page as the first slide
+\end{frame}
+
+% ----------------------------------------------------------------------------------------
+%	PRESENTATION SLIDES
+% ----------------------------------------------------------------------------------------
+
+% ------------------------------------------------
+\section{First Section} % Sections can b % Your email addresse created in order to organize your presentation into discrete blocks, all sections and subsections are automatically printed in the table of contents as an overview of the talk
+% ------------------------------------------------
+
+\subsection{Subsection Example} % A subsection can be created just before a set of slides with a common theme to further break down your presentation into chunks
+
+\begin{frame}
+  \frametitle{The Bayesian Way}
+  \begin{equation*}
+    p(\mb{\omega}|\mb{Y}, \mb{X}) = \dfrac{p(\mb{\omega}) p(\mb{Y}|\mb{X}, \mb{\omega})}{p(\mb{Y}|\mb{X})}
+  \end{equation*}
+  \vspace*{1cm}
+  \begin{equation*}
+    p(\mb{y}^* |\mb{x}^*, \mb{Y}, \mb{X}, \mb{\omega}) = 
+    \int p(\mb{y}^* |\mb{x}^*, \mb{\omega}) p(\mb{\omega}|\mb{Y}, \mb{X}) d\mb{\omega}
+  \end{equation*}
+
+\end{frame}
+% 
+% 
+% ------------------------------------------------
+
+\begin{frame}
+  \frametitle{Current Research}
+  \begin{itemize}
+  \item Preliminary work done in \cite{Neal1996}, \cite{mackay1992}
+    % 
+  \item Only recently resurfaced as a topic of interest
+    % 
+  \item Neural Networks are hard to perform inference on
+    % 
+  \item Recent work done in \cite{graves2011} is promising to address this issue
+    % 
+  \item How to use Bayesian methods to model uncertainty in our predictions \cite{kingma2015}, \cite{gal2016}
+  \end{itemize}  
+\end{frame}
+
+% ------------------------------------------------
+
+% ------------------------------------------------
+
+\begin{frame}
+  \frametitle{Topics of interest}
+  \begin{itemize}
+  \item Look at model design, ie. can we let a Bayesian method actually design our model
+  \item Bayesian Domain Adaptation: how to use pretrained models as a prior?
+  \item Can we incorporate output uncertainty in the training process?
+  \item How to make decisions with uncertainty estimations?
+  \item How good is our uncertainty estimations?
+  \item Big one: How to use a Bayesian framework to better understand deep nets?
+  \end{itemize}
+
+\end{frame}
+% 
+% 
+% 
+% 
+% ------------------------------------------------
+
+% ------------------------------------------------
+
+\begin{frame}
+  \frametitle{Neural Network Graphical Model}
+  \tikzset{%
+    neuron missing/.style={
+      draw=none, 
+      scale=4,
+      text height=0.333cm,
+      execute at begin node=\color{black}$\vdots$
+    },
+  }
+
+  \hspace*{1.5cm}
+  \begin{tikzpicture}[x=1.5cm, y=1.5cm, >=stealth]
+    % draw input features  
+    \foreach \m/\l [count=\y] in {1,2,3}
+    {
+      \node [circle,fill=green!50,minimum size=1cm] (input-\m) at (0,2.5-\y) {};
+    }
+    \foreach \m/\l [count=\y] in {4}
+    {
+      \node [circle,fill=green!50,minimum size=1cm ] (input-\m) at (0,-2.5) {};
+    }
+    
+    \node [neuron missing]  at (0,-1.5) {};
+
+    \foreach \m [count=\y] in {1}
+    \node [circle,fill=red!50,minimum size=1cm ] (hidden-\m) at (2,0.75) {};
+
+    % draw hidden layers
+    \foreach \m [count=\y] in {2}
+    \node [circle,fill=red!50,minimum size=1cm ] (hidden-\m) at (2,-1.85) {};  
+    \node [neuron missing]  at (2,-0.3) {};
+
+    % draw output neurons
+    \foreach \m [count=\y] in {1}
+    \node [circle,fill=blue!50,minimum size=1cm ] (output-\m) at (4,0.5-\y) {};
+
+    \foreach \l [count=\i] in {1,2,3,n_x}
+    \draw [<-] (input-\i) -- ++(-1,0)
+    node [above, midway] {$x_{\l}$};
+    \foreach \l [count=\i] in {1}
+    \node [above] at (input-\i.north) {$\vec{x}$};
+
+    
+    \foreach \l [count=\i] in {1,k}
+    \node [above] at (hidden-\i.north) {$H^{[l]}_{\l}$};
+
+    \draw [->] (output-1) -- ++(1,0)
+    node [above, midway] {$O_{1}$};
+
+    \foreach \i in {1,...,4}
+    \foreach \j in {1,...,2}
+    \draw [->] (input-\i) -- (hidden-\j);
+
+    \foreach \i in {1,...,2}
+    \draw [->] (hidden-\i) -- (output-1);
+
+    % \foreach \l [count=\x from 0] in {Input, Hidden, Ouput}
+    % \node [align=center, above] at (\x*2,2) {\l \\ layer};
+
+  \end{tikzpicture}
+\end{frame}
+% 
+% 
+% 
+% 
+% ------------------------------------------------
+\begin{frame}
+  \frametitle{Inside a Neuron}
+  Neuron consists of a linear mapping of the input, followed by a non-linear activation.
+  \begin{align*}
+    a^{[i]}_j &= g( \mb{w}^{[i]T}_j \mb{x} + b^{[i]}_j) 
+    \\
+    \mb{w}^{[i]T}_j &= \text{ weight vector}
+    \\
+    b^{[i]T}_j  &= \text{ bias}
+    \\
+    g( \cdot ) &= \text{ non-linear activation function}
+    \\
+    [i] &= \text{ layer number}
+    \\
+    j &= \text{ node number within the } i^{th} \text{ layer}
+  \end{align*}
+
+  
+  \begin{tikzpicture}[x=1.5cm, y=2.5cm,>=stealth]
+    \centering
+    \node[circle,fill=red!50,minimum size=1cm] at (0,0) (hidden) {} ;
+    \draw [<-] (hidden) -- ++(-4,0)
+    node [above, midway] {$\mb{x}$};
+    \node [above=10] at (hidden) {$g( \mb{w}^{[i]T}_j \mb{x} + b^{[i]}_j)$};
+    \draw [->] (hidden) -- ++(4,0)
+    node [above, midway=-10] {$a^{[i]}_j$};
+  \end{tikzpicture}
+\end{frame}
+% 
+% 
+% 
+% 
+% ------------------------------------------------
+\begin{frame}
+  \frametitle{Vectorisation}
+  Can implement the neural network model more efficiently by using matrix operations.
+  \begin{equation*}
+    \mathbf{z}^{[1]} = W^{[1]}\mathbf{x} + \mathbf{b}^{[1]} = 
+    \begin{bmatrix}
+      \cdots & w_{1}^{[1]T} & \cdots \\
+      \cdots & w_{2}^{[1]T} & \cdots \\
+      & \vdots       &  \\
+      \cdots & w_{k_l}^{[1]T} & \cdots \\
+    \end{bmatrix}
+    \begin{bmatrix}
+      x_1\\
+      x_2\\
+      \vdots\\
+      x_{n_x}
+    \end{bmatrix}
+    + 
+    \begin{bmatrix}
+      b_{1}^{[1]} \\
+      b_{2}^{[1]} \\
+      \vdots \\
+      b_{k_l}^{[1]} \\
+    \end{bmatrix}
+  \end{equation*}
+  % 
+  % 
+  \vspace*{1cm}
+  % 
+  % 
+  \begin{equation*}
+    \mb{a}^{[1]} = g( \mb{z}^{[1]} )
+  \end{equation*}
+\end{frame}
+% 
+% 
+% 
+% 
+% ------------------------------------------------
+\begin{frame}
+  \frametitle{Further Vectorisation - Multiple Input Vectors}
+  Can pass all (or as much as physically possible) into the network in a single iteration by storing the input vectors $\mb{x}_i$ as columns of a matrix $X$.
+  \begin{equation*}
+    Z^{[1]} = W^{[1]} X + \mathbf{b}^{[1]} = 
+    \begin{bmatrix}
+      \cdots & w_{1}^{[1]T} & \cdots \\
+      \cdots & w_{2}^{[1]T} & \cdots \\
+      & \vdots       &  \\
+      \cdots & w_{k_l}^{[1]T} & \cdots \\
+    \end{bmatrix}
+    \begin{bmatrix}
+      \vdots & \vdots & & \vdots\\
+      \mathbf{x}^{(1)} & \mathbf{x}^{(2)} &  \cdots & \mathbf{x}^{(m)}\\
+      \vdots & \vdots & & \vdots\\
+    \end{bmatrix}
+    + 
+    \begin{bmatrix}
+      b_{1}^{[1]} \\
+      b_{2}^{[1]} \\
+      \vdots \\
+      b_{k_l}^{[1]} \\
+    \end{bmatrix}
+  \end{equation*}
+  % 
+  % 
+  \vspace*{1cm}
+  % 
+  % 
+  \begin{equation*}
+    A^{[1]} = g( Z^{[1]} )
+  \end{equation*}
+\end{frame}
+% 
+% 
+% 
+% 
+% ------------------------------------------------
+\begin{frame}
+  \frametitle{More Hidden Layers}
+  \tikzset{%
+    neuron missing/.style={
+      draw=none, 
+      scale=4,
+      text height=0.333cm,
+      execute at begin node=\color{black}$\vdots$
+    },
+  }
+
+  \hspace*{0.75cm}
+  \begin{tikzpicture}[x=1.5cm, y=1.5cm, >=stealth]
+    % draw input features  
+    \foreach \m/\l [count=\y] in {1,2,3}
+    {
+      \node [circle,fill=green!50,minimum size=1cm] (input-\m) at (0,2.5-\y) {};
+    }
+    \foreach \m/\l [count=\y] in {4}
+    {
+      \node [circle,fill=green!50,minimum size=1cm ] (input-\m) at (0,-2.5) {};
+    }
+
+    % draw hidden layers
+    % first layer
+    \node [neuron missing]  at (0,-1.5) {};
+
+    \foreach \m [count=\y] in {1}
+    \node [circle,fill=red!50,minimum size=1cm ] (hidden1-\m) at (2,0.75) {};
+
+    \foreach \m [count=\y] in {2}
+    \node [circle,fill=red!50,minimum size=1cm ] (hidden1-\m) at (2.0,-1.85) {};  
+    \node [neuron missing]  at (2,-0.3) {};
+
+    % second layer
+    \node [neuron missing]  at (3.5,-0.3) {};
+    \foreach \m [count=\y] in {1}
+    \node [circle,fill=red!50,minimum size=1cm ] (hidden2-\m) at (3.5, 0.75) {};
+
+    
+    \foreach \m [count=\y] in {2}
+    \node [circle,fill=red!50,minimum size=1cm ] (hidden2-\m) at (3.5,-1.85) {};  
+    \node [neuron missing]  at (2,-0.3) {};
+
+    % draw output neuron
+    \foreach \m [count=\y] in {1}
+    \node [circle,fill=blue!50,minimum size=1cm ] (output-\m) at (5.0,0.5-\y) {};
+
+    \foreach \l [count=\i] in {1}
+    \node [above] at (input-\i.north) {$\vec{x}$};
+
+    \foreach \l [count=\i] in {1,2,3,n_x}
+    \draw [<-] (input-\i) -- ++(-1,0)
+    node [above, midway] {$x_{\l}$};
+
+    \foreach \l [count=\i] in {1,k_1}
+    \node [above] at (hidden1-\i.north) {$H^{[1]}_{\l}$};
+
+    \foreach \l [count=\i] in {1,k_l}
+    \node [above] at (hidden2-\i.north) {$H^{[l]}_{\l}$};
+
+    \draw [->] (output-1) -- ++(1,0)
+    node [above, midway] {$O_{1}$};
+
+    \foreach \i in {1,...,4}
+    \foreach \j in {1,...,2}
+    \draw [->] (input-\i) -- (hidden-\j);
+
+    \foreach \i in {1,...,2}
+    \foreach \j in {1,...,2}
+    \draw [->] (hidden1-\i) -- (hidden2-\j);
+
+    \foreach \i in {1,...,2}
+    \draw [->] (hidden2-\i) -- (output-1);
+    
+    % \foreach \l [count=\x from 0] in {Input, Hidden, Ouput}
+    % \node [align=center, above] at (\x*2,2) {\l \\ layer};
+
+  \end{tikzpicture}
+\end{frame}
+% 
+% 
+% 
+% 
+% ------------------------------------------------
+\begin{frame}
+  \frametitle{Training - Gradient Descent}
+  Forward Propagation in a 2 layer network (1 hidden layer)
+  \begin{gather*}
+   Z^{[1]} = W^{[1]}X + b^{[1]}\\
+    A^{[1]} = g(Z^{[1]})\\
+    Z^{[2]} = W^{[2]}A^{[1]} + b^{[2]}\\
+    A^{[2]} = g(Z^{[2]}) = \hat{y}
+  \end{gather*}
+  %
+  %
+  To perform gradient descent, first need to define an objective to minimise.
+  \begin{equation*}
+    \mathcal{L}(\hat{y}, y) = - \Big(y\log(\hat{y}) + (1-y)\log(1 - \hat{y})  \Big)
+  \end{equation*}
+  \begin{equation*}
+    J(w,b) =\frac{1}{m} \Sigma_{i=1}^{m}\mathcal{L}(\hat{y}_i, y_i)
+  \end{equation*}
+\end{frame}
+% 
+% 
+% 
+% 
+% ------------------------------------------------
+\begin{frame}
+  \frametitle{Training - Gradient Descent}
+  With our cost objective to minimise,
+  \begin{equation*}
+    J(w,b) =\frac{1}{m} \Sigma_{i=1}^{m}\mathcal{L}(\hat{y}_i, y_i)
+  \end{equation*}
+  we can find the partial derivative of this objective and use it to update out network parameters.
+  \begin{equation*}
+    \theta = \theta - \alpha \dfrac{\partial J}{\partial \theta}
+  \end{equation*}
+  where $\alpha$ is our learning rate, and $\theta$ is any of our model weights $W^{[l]}$ or bias' $\mb{b}^{[l]}$.
+\end{frame}
+% 
+% 
+% 
+% 
+% ------------------------------------------------
+\begin{frame}
+  \frametitle{Comparison - Regression}
+  \vspace*{-0.15cm}
+  \begin{figure}[!h]
+    \centering
+    \includegraphics[width=0.8\linewidth]{./figs/gp.eps}
+    \caption{Regression using Gaussian Process}
+    \label{fig:gp}
+  \end{figure}
+\end{frame}
+% 
+% 
+% 
+% 
+% ------------------------------------------------
+\begin{frame}
+  \frametitle{Comparison - Regression}
+  \vspace*{-0.15cm}
+  \begin{figure}[!h]
+    \centering
+    \includegraphics[width=0.8\linewidth]{./figs/nn.eps}
+    \caption{Regression using neural network with two hidden layers}
+    \label{fig:nn}
+  \end{figure}
+\end{frame}
+% 
+% 
+% 
+% 
+% ------------------------------------------------
+
+
+\begin{frame}
+  \frametitle{References}
+  \printbibliography
+\end{frame}
+
+% ----------------------------------------------------------------------------------------
+
+\end{document}
