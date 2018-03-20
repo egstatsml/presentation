@@ -76,7 +76,8 @@
   % \setbeamertemplate{navigation symbols}{} % To remove the navigation symbols from the bottom of all slides uncomment this line
 }
 
-\usepackage{url}
+\usepackage{hyperref}
+\newcommand{\myhref}[3][blue]{\href{#2}{\texttt{\color{#1}{#3}}}}%
 \usepackage{array}
 \usepackage{amsmath}
 \usepackage{tikz}
@@ -131,6 +132,20 @@
 % ------------------------------------------------
 
 \subsection{Subsection Example} % A subsection can be created just before a set of slides with a common theme to further break down your presentation into chunks
+% 
+% 
+% 
+% 
+% ------------------------------------------------
+\begin{frame}
+  \frametitle{Overview}
+  \begin{itemize}
+  \item Introduce Neural Networks
+  \item Some examples of neural networks applied to regression tasks
+  \item Comparison to probabilistic models
+  \item Recent research in the field of Bayesian Neural Networks
+  \end{itemize}
+\end{frame}
 % 
 % 
 % 
@@ -260,15 +275,6 @@
 % 
 % ------------------------------------------------
 \begin{frame}
-  \frametitle{More Hidden Layers}
-  \input{neural_net_multiple.tex}
-\end{frame}
-% 
-% 
-% 
-% 
-% ------------------------------------------------
-\begin{frame}
   \frametitle{Training - Gradient Descent}
   Forward Propagation in a 2 layer network (1 hidden layer)
   \begin{align*}
@@ -303,6 +309,15 @@
     \theta = \theta - \alpha \dfrac{\partial J}{\partial \theta}
   \end{equation*}
   where $\alpha$ is our learning rate, and $\theta$ is any of our model weights $W^{[l]}$ or bias' $\mb{b}^{[l]}$.
+\end{frame}
+% 
+% 
+% 
+% 
+% ------------------------------------------------
+\begin{frame}
+  \frametitle{More Hidden Layers}
+  \input{neural_net_multiple.tex}
 \end{frame}
 % 
 % 
@@ -354,10 +369,11 @@
   \frametitle{Dropout}
   With dropout, the feedforward opertation becomes,
   \begin{align*}
-    r_j^{[i]} & \sim \text{Bernoulli}(p)\\
-    \widetilde{\mb{a}}^{[i-1]} &= \mb{r}^{[i]} \odot \mb{a}^{[i-1]} \\
-    \widetilde{\mb{z}}^{[1]} &= W^{[1]}\widetilde{\mb{a}}^{[i-1]} + b^{[1]}\\
-    \widetilde{\mb{a}}^{[i+1]} &= g(\widetilde{\mb{z}}^{[1]})\\
+    r_j^{[i]} & \sim \textrm{Bernoulli}(p)\\
+    R^{[i]} &= \textrm{diag}(\mb{\epsilon})\\
+    \widetilde{A}^{[i-1]} &= R^{[i]}A^{[i-1]} \\
+    \widetilde{Z}^{[i]} &= W^{[i]}\widetilde{A}^{[i-1]} + b^{[i]}\\
+    \widetilde{A}^{[i]} &= g(\widetilde{Z}^{[i]})\\
   \end{align*}    
 \end{frame}
 % 
@@ -485,17 +501,16 @@
 \begin{frame}
   \frametitle{Variational Methods}
   Select an approximate posterior $q_\theta(\omega)$ and minimise KL Divergence between approximate and true posterior
-  \begin{equation*}
-    \hat{\mathcal{L}}_{VI}(\theta) := - \int q_\theta (\mb{\omega})
+  \begin{align*}
+    \hat{\mathcal{L}}_{VI}(\theta) &:= - \int q_\theta (\mb{\omega})
     \log\Big( p(\mb{Y} | \mb{X}, \mb{\omega}) \Big) d\mb{\omega} +
     \text{KL}\Big( q_\theta (\mb{\omega}) || p (\mb{\omega}) \Big)
-  \end{equation*}
-  
-  \begin{equation*}
-    \hat{\mathcal{L}}_{VI}(\theta) := - \sum_{i=1}^{n_x}\int q_\theta (\mb{\omega})
+    \\
+    \\
+                                   &= - \sum_{i=1}^{n_x}\int q_\theta (\mb{\omega})
     \log\Big( p(\mb{y}_i | \mb{f}^{\mb{\omega}}(\mb{x}_i) \Big) d\mb{\omega} +
     \text{KL}\Big( q_\theta (\mb{\omega}) || p (\mb{\omega}) \Big)
-  \end{equation*}
+  \end{align*}
   First term corresponds to expected log-liklihood
 \end{frame}
 % 
@@ -512,7 +527,7 @@
   We can use the reparameterisation trick proposed in \cite{kingma2013}, where the latent variable $\mb{\omega} \sim q_\theta(\mb{\omega})$ is expressed as a deterministic function $g(\epsilon, \theta)$, with $\mb{\epsilon} \sim p(\mb{\epsilon}) = \Pi_{l,i} p(\epsilon_{l,i})$.
   \\
   \vspace*{0.5cm}
-  For example, if $q_\theta(\mb{\omega}) \sim \mathcal{N}(\mu, \sigma^2)$, can have $g(\theta, \epsilon) = \mu + \epsilon \sigma$, where $p(\epsilon) = \mathcal{N}(0, I)$
+  For example, if $\mb{\omega} \sim \mathcal{N}(\mu, \sigma^2)$, can have $g(\theta, \epsilon) = \mu + \epsilon \sigma$, where $p(\epsilon) = \mathcal{N}(0, I)$
 \end{frame}
 % 
 % 
@@ -522,7 +537,13 @@
 % ------------------------------------------------
 \begin{frame}
   \frametitle{Reparameterisation Trick}
-  With this, we can rewrite our KL divergence term between the true and approximate posterior \cite{gal2016}.
+  With this, we can rewrite our KL divergence term between the true and approximate posterior. In this way, our variational objective,
+  \begin{equation*}
+    \hat{\mathcal{L}}_{VI}(\theta) := - \sum_{i=1}^{n_x}\int q_\theta (\mb{\omega})
+    \log\Big( p(\mb{y}_i | \mb{f}^{\mb{\omega}}(\mb{x}_i) \Big) d\mb{\omega} +
+    \text{KL}\Big( q_\theta (\mb{\omega}) || p (\mb{\omega}) \Big)
+  \end{equation*}
+  becomes \cite{gal2016},
   \begin{equation*}
     \hat{\mathcal{L}}_{VI}(\theta) := - \sum_{i=1}^{n_x}\int p(\mb{\epsilon})
     \log\Big( p(\mb{y}_i | \mb{f}^{g(\epsilon, \theta)} (\mb{x}_i) \Big) d\mb{\epsilon} +
@@ -538,13 +559,12 @@
 % ------------------------------------------------
 \begin{frame}
   \frametitle{Link to Dropout}
-  With this, we can rewrite our KL divergence term between the true and approximate posterior \cite{gal2016}.
   \begin{equation*}
     \hat{\mathcal{L}}_{VI}(\theta) := - \sum_{i=1}^{n_x}\int p(\mb{\epsilon})
     \log\Big( p(\mb{y}_i | \mb{f}^{g(\epsilon, \theta)} (\mb{x}_i) \Big) d\mb{\epsilon} +
     \text{KL}\Big( q_\theta (\mb{\omega}) || p (\mb{\omega}) \Big)
   \end{equation*}
-  In this expression, the ter $\mb{f}^{g(\epsilon, \theta)}$ corresponds to the output of the network, with dropout parameterised by $p(\mb{\epsilon}) $ is applied to the networks units.
+  In this expression, the term $\mb{f}^{g(\epsilon, \theta)}$ corresponds to the output of the network, with dropout described by $p(\mb{\epsilon}) $ applied to the networks units.
 
   This expression can then be approximated using Monte Carlo methods to find our expression for the approximate posterior.
   \begin{equation*}
@@ -552,7 +572,7 @@
     \log\Big( p(\mb{y}_i | \mb{f}^{g(\hat{\epsilon}, \theta)} (\mb{x}_i) \Big)+
     \text{KL}\Big(q_\theta (\mb{\omega}) || p (\mb{\omega}) \Big)
   \end{equation*}
-  This expression can be optimised using gradient descent to approximate optimal parameters $\theta$.
+  This expression can be optimised using gradient descent to optimal parameters $\theta$ for our approximate posterior $q_\theta(\mb{\omega})$.
 \end{frame}
 % ------------------------------------------------
 % 
@@ -561,15 +581,20 @@
 % 
 % ------------------------------------------------
 \begin{frame}
-  \frametitle{Link to Dropout}
-
-  This expression can then be approximated using Monte Carlo methods to find our expression for the approximate posterior.
-  \begin{equation*}
-    \hat{\mathcal{L}}_{MC}(\theta) := - \sum_{i=1}^{n_x}
-    \log\Big( p(\mb{y}_i | \mb{f}^{g(\hat{\epsilon}, \theta)} (\mb{x}_i) \Big)+
-    \text{KL}\Big(q_\theta (\mb{\omega}) || p (\mb{\omega}) \Big)
-  \end{equation*}
-  This expression can be optimised using gradient descent to approximate optimal parameters $\theta$. From this, we can form our predictive posterior, and perform Monte Carlo integration to again approximate it and extract uncertainty estimates.
+  \frametitle{Predictive Posterior}
+  \begin{align*}
+    \widetilde{\log} \Bigg( p(\mb{y}^* | \mb{x}^*, X, Y) \Bigg)
+    &:=  \log \Big(
+      \dfrac{1}{T} \sum_{t=1}^T
+      p(\mb{y}^* | \mb{x}^*, \mb{\omega}_t) \Big)
+    \\
+    &\underset{T \rightarrow \infty}{\longrightarrow} \int p(\mb{y}^* | \mb{x}^*, \mb{\omega})
+      q_\theta(\mb{\omega}) d\mb{\omega}
+    \\
+    & \approx \int p(\mb{y}^* | \mb{x}^*, \mb{\omega})
+      p(\mb{\omega} | X,Y)  d\mb{\omega}
+  \end{align*}
+Sampling from this approximate predictive distribution results in multiple forward passes during test time while including stochastic dropout variables \cite{gal2016}.
 \end{frame}
 % ------------------------------------------------
 % 
@@ -599,5 +624,20 @@
   \frametitle{References}
   \printbibliography
 \end{frame}
-% ----------------------------------------------------------------------------------------
+%
+%
+%
+%
+%----------------------------------------------------------------------------------------
+\begin{frame}
+  \frametitle{Code}
+  Gaussian Process and Neural Network Regression
+  \\
+  \myhref{https://github.com/ethangoan/regression}{https://github.com/ethangoan/regression}
+  \\
+  \vspace*{0.5cm}
+  Gaussian Prior over model parameters
+  \\
+  \myhref{https://github.com/ethangoan/bayesian_nn}{https://github.com/ethangoan/bayesian\_nn}
+\end{frame}
 \end{document}
